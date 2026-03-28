@@ -54,7 +54,7 @@ IDE	IntelliJ IDEA
 
 ⚙️ Installation & Setup
 
-git clone https://github.com/mohammadsami3378/Inventory-Management-reporting-system.git
+git clone https://github.com/Raj Shree /Inventory-Management-reporting-system.git
 cd Inventory-Management-reporting-system
 
 Steps:
@@ -66,7 +66,7 @@ Access the system at: 👉 http://localhost:8080
 
 📊 Project Documentation
 
-📄 Agile Document: Mahmmadsami M Bilagi (Agile doc).xlsx
+📄 Agile Document: Raj Shree S (Agile doc).xlsx
 📊 Presentation: Presentation (PPT).pdf
 
 🔐 Security Considerations
