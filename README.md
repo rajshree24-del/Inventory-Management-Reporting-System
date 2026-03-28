@@ -54,7 +54,7 @@ IDE	IntelliJ IDEA
 
 ⚙️ Installation & Setup
 
-git clone https://github.com/Raj Shree /Inventory-Management-reporting-system.git
+git clone https://github.com/rajshree24-del /Inventory-Management-reporting-system.git
 cd Inventory-Management-reporting-system
 
 Steps:
