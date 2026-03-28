@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Inventory Login</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+    <style>
+
+        *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Segoe UI, sans-serif;
+        }
+
+        /* background */
+
+        body{
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background: radial-gradient(circle at top,#0f172a,#020617);
+        overflow:hidden;
+        color:white;
+        }
+
+        /* particles container */
+
+        #particles{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        z-index:-10;
+        pointer-events:none;
+        }
+
+        /* glass login card */
+
+        .login-card{
+        width:360px;
+        background:rgba(255,255,255,0.08);
+        backdrop-filter:blur(20px);
+        border:1px solid rgba(255,255,255,0.1);
+        border-radius:14px;
+        box-shadow:0 10px 40px rgba(0,0,0,.6);
+        overflow:hidden;
+        position:relative;
+        z-index:10;
+        }
+
+        /* header */
+
+        .card-header{
+        background:linear-gradient(135deg,#4a6cf7,#6f8dfc);
+        color:white;
+        text-align:center;
+        padding:18px;
+        font-size:20px;
+        font-weight:600;
+        }
+
+        /* body */
+
+        .card-body{
+        padding:35px;
+        text-align:center;
+        }
+
+        /* title */
+
+        .title{
+        font-size:24px;
+        font-weight:600;
+        margin-bottom:25px;
+        }
+
+        /* input group */
+
+        .input-group{
+        position:relative;
+        margin-bottom:18px;
+        }
+
+        /* left icon */
+
+        .input-group .left-icon{
+        position:absolute;
+        left:12px;
+        top:50%;
+        transform:translateY(-50%);
+        color:#94a3b8;
+        }
+
+        /* password toggle icon */
+
+        .input-group .toggle-pass{
+        position:absolute;
+        right:12px;
+        top:50%;
+        transform:translateY(-50%);
+        cursor:pointer;
+        color:#94a3b8;
+        }
+
+        /* input */
+
+        .input-group input{
+        width:100%;
+        padding:12px 40px;
+        border-radius:8px;
+        border:1px solid rgba(255,255,255,0.15);
+        background:rgba(255,255,255,0.05);
+        color:white;
+        font-size:14px;
+        }
+
+        .input-group input:focus{
+        outline:none;
+        border-color:#6366f1;
+        }
+
+        /* login button */
+
+        .login-btn{
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:8px;
+        background:linear-gradient(90deg,#6366f1,#8b5cf6);
+        color:white;
+        font-size:15px;
+        cursor:pointer;
+        transition:0.3s;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        }
+
+        .login-btn:hover{
+        transform:scale(1.05);
+        box-shadow:0 0 20px rgba(99,102,241,.6);
+        }
+
+        /* spinner */
+
+        .spinner{
+        border:3px solid rgba(255,255,255,0.3);
+        border-top:3px solid white;
+        border-radius:50%;
+        width:18px;
+        height:18px;
+        animation:spin 1s linear infinite;
+        display:none;
+        }
+
+        @keyframes spin{
+        0%{transform:rotate(0deg)}
+        100%{transform:rotate(360deg)}
+        }
+
+        /* error */
+
+        .error{
+        color:#ff6b6b;
+        font-size:13px;
+        margin-bottom:12px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div id="particles"></div>
+
+<div class="login-card">
+
+    <div class="card-header">
+        Inventory System
+    </div>
+
+    <div class="card-body">
+
+        <div class="title">Login</div>
+
+        <div th:if="${param.error}" class="error">
+            Invalid username or password
+        </div>
+
+        <form th:action="@{/login}" method="post" onsubmit="showLoader()">
+
+            <div class="input-group">
+                <i class="fa-solid fa-user left-icon"></i>
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock left-icon"></i>
+                <input id="password" type="password" name="password" placeholder="Password" required>
+                <i id="toggleIcon" class="fa-solid fa-eye toggle-pass" onclick="togglePassword()"></i>
+            </div>
+
+            <button class="login-btn" type="submit">
+                <span>Login</span>
+                <div class="spinner" id="spinner"></div>
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+    /* particles background */
+
+    tsParticles.load("particles",{
+    particles:{
+    number:{value:70},
+    size:{value:3},
+    move:{speed:1},
+    links:{
+    enable:true,
+    distance:150,
+    color:"#6366f1",
+    opacity:0.3,
+    width:1
+    },
+    color:{value:"#6366f1"}
+    },
+    background:{
+    color:"transparent"
+    },
+    detectRetina:true
+    });
+
+    /* toggle password */
+
+    function togglePassword(){
+
+    const pass=document.getElementById("password");
+    const icon=document.getElementById("toggleIcon");
+
+    if(pass.type==="password"){
+    pass.type="text";
+    icon.classList.replace("fa-eye","fa-eye-slash");
+    }else{
+    pass.type="password";
+    icon.classList.replace("fa-eye-slash","fa-eye");
+    }
+
+    }
+
+    /* loading spinner */
+
+    function showLoader(){
+    document.getElementById("spinner").style.display="block";
+    }
+
+</script>
+
+</body>
+
+</html>
+

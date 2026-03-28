@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Low Stock Products</title>
+
+    <style>
+
+        *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Segoe UI, sans-serif;
+        }
+
+        body{
+        background:#f4f6fb;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        background:linear-gradient(135deg,#4a6cf7,#6f8dfc);
+        padding:15px 40px;
+        color:white;
+        }
+
+        .logo{
+        font-size:22px;
+        font-weight:600;
+        }
+
+        .nav-links a{
+        margin-left:15px;
+        padding:8px 15px;
+        border-radius:6px;
+        text-decoration:none;
+        color:white;
+        background:rgba(255,255,255,0.2);
+        }
+
+        .nav-links a:hover{
+        background:white;
+        color:#4a6cf7;
+        }
+
+        /* CONTAINER */
+
+        .container{
+        width:90%;
+        margin:auto;
+        margin-top:30px;
+        }
+
+        .title{
+        font-size:28px;
+        margin-bottom:20px;
+        }
+
+        /* ALERT BOX */
+
+        .alert{
+        background:#fff3cd;
+        border-left:6px solid #f39c12;
+        padding:15px;
+        margin-bottom:20px;
+        border-radius:6px;
+        }
+
+        /* TABLE */
+
+        table{
+        width:100%;
+        border-collapse:collapse;
+        background:white;
+        border-radius:8px;
+        overflow:hidden;
+        box-shadow:0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        th{
+        background:#f39c12;
+        color:white;
+        padding:12px;
+        text-align:left;
+        }
+
+        td{
+        padding:12px;
+        border-bottom:1px solid #eee;
+        }
+
+        tr:hover{
+        background:#fff9e6;
+        }
+
+        /* LOW STOCK BADGE */
+
+        .badge{
+        background:#e74c3c;
+        color:white;
+        padding:5px 10px;
+        border-radius:12px;
+        font-size:12px;
+        }
+
+        /* BUTTON */
+
+        .back-btn{
+        display:inline-block;
+        margin-top:20px;
+        padding:10px 18px;
+        background:#4a6cf7;
+        color:white;
+        border-radius:6px;
+        text-decoration:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <div class="logo">Inventory System</div>
+
+    <div class="nav-links">
+
+        <a th:href="@{/dashboard}">Dashboard</a> <a th:href="@{/products}">Products</a> <a th:href="@{/low-stock}">Low Stock</a> <a th:href="@{/logs}">Logs</a> <a th:href="@{/logout}">Logout</a>
+
+    </div>
+
+</div>
+
+<div class="container">
+
+    <h2 class="title">Low Stock Products</h2>
+
+    <div class="alert">
+        ⚠ These products are running low in stock. Please restock soon.
+    </div>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Status</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="product : ${products}">
+
+            <td th:text="${product.name}"></td>
+
+            <td th:text="${product.quantity}"></td>
+
+            <td><span class="badge">Low Stock</span></td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <a th:href="@{/dashboard}" class="back-btn">Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>
